@@ -2,7 +2,7 @@ version: '3.8'
 services:
   db:
     image: postgres:15-alpine
-    container_name: postgres_container
+    container_name: my-databse
     restart: always
     environment:
       POSTGRES_USER: root
@@ -15,7 +15,7 @@ services:
 
   app:
     build: .
-    container_name: express_app
+    container_name: my-api
     restart: always
     depends_on:
       - db
@@ -27,6 +27,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+      - /app/node_modules
     command: npm run start
 
 volumes:
