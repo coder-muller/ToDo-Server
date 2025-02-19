@@ -20,6 +20,10 @@ const authMiddleware_1 = require("./middlewares/authMiddleware");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
+//Rota teste
+app.get("/", (req, res) => {
+    res.send("Welcome to the Docker + PostgreSQL API!");
+});
 // Rotas públicas
 app.use("/api/auth", authRoutes_1.default);
 // Rotas protegidas

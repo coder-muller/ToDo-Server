@@ -9,6 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+//Rota teste
+app.get("/", (req, res) => {
+    res.send("Welcome to the Docker + PostgreSQL API!");
+});
+
 // Rotas públicas
 app.use("/api/auth", authRoutes);
 
