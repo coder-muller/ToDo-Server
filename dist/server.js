@@ -15,7 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const workspaceRoutes_1 = __importDefault(require("./routes/workspaceRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const todoRoutes_1 = __importDefault(require("./routes/todoRoutes"));
 const authMiddleware_1 = require("./middlewares/authMiddleware");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -26,11 +28,13 @@ app.get("/", (req, res) => {
 });
 // Rotas públicas
 app.use("/api/auth", authRoutes_1.default);
+app.use("/api", userRoutes_1.default);
 // Rotas protegidas
-app.use("/api", authMiddleware_1.authenticateToken, userRoutes_1.default);
+app.use("/api", authMiddleware_1.authenticateToken, workspaceRoutes_1.default);
+app.use("/api", authMiddleware_1.authenticateToken, todoRoutes_1.default);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
 // Encerramento correto do Prisma
 const client_1 = __importDefault(require("./prisma/client"));

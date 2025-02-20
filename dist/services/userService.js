@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllUsers = getAllUsers;
+exports.getUserById = getUserById;
 exports.createUser = createUser;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
@@ -20,7 +21,21 @@ const client_1 = __importDefault(require("../prisma/client"));
 const hashUtils_1 = require("../utils/hashUtils");
 function getAllUsers() {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield client_1.default.user.findMany();
+        return yield client_1.default.user.findMany({
+            include: {
+                workspaces: true
+            }
+        });
+    });
+}
+function getUserById(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield client_1.default.user.findUnique({
+            where: { id },
+            include: {
+                workspaces: true
+            }
+        });
     });
 }
 function createUser(name, email, password) {

@@ -2,7 +2,20 @@ import prisma from "../prisma/client";
 import { hashPassword } from "../utils/hashUtils";
 
 export async function getAllUsers() {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+        include: {
+            workspaces: true
+        }
+    });
+}
+
+export async function getUserById(id: number) {
+    return await prisma.user.findUnique({
+        where: { id },
+        include: {
+            workspaces: true
+        }
+    });
 }
 
 export async function createUser(name: string, email: string, password: string) {

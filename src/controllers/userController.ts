@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUsers, createUser, updateUser, deleteUser } from "../services/userService";
+import { getAllUsers, createUser, updateUser, deleteUser, getUserById } from "../services/userService";
 
 export async function getUsers(req: Request, res: Response) {
     try {
@@ -12,6 +12,17 @@ export async function getUsers(req: Request, res: Response) {
     } catch (error) {
         console.error("Erro ao buscar usuários:", error);
         res.status(500).json({ error: "Erro ao buscar usuários" });
+    }
+}
+
+export async function getUser(req: Request, res: Response) {
+    try {
+        const { id } = req.params;
+        const user = await getUserById(Number(id));
+        res.json(user);
+    } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        res.status(500).json({ error: "Erro ao buscar usuário" });
     }
 }
 

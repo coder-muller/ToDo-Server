@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUsers = getUsers;
+exports.getUser = getUser;
 exports.postUser = postUser;
 exports.putUser = putUser;
 exports.deleteUserById = deleteUserById;
@@ -27,6 +28,19 @@ function getUsers(req, res) {
         catch (error) {
             console.error("Erro ao buscar usuários:", error);
             res.status(500).json({ error: "Erro ao buscar usuários" });
+        }
+    });
+}
+function getUser(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { id } = req.params;
+            const user = yield (0, userService_1.getUserById)(Number(id));
+            res.json(user);
+        }
+        catch (error) {
+            console.error("Erro ao buscar usuário:", error);
+            res.status(500).json({ error: "Erro ao buscar usuário" });
         }
     });
 }

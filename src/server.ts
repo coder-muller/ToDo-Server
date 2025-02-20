@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes";
+import workspaceRoutes from "./routes/workspaceRoutes";
 import authRoutes from "./routes/authRoutes";
+import todosRoutes from "./routes/todoRoutes";
 import { authenticateToken } from "./middlewares/authMiddleware";
 
 const app = express();
@@ -16,13 +18,15 @@ app.get("/", (req, res) => {
 
 // Rotas públicas
 app.use("/api/auth", authRoutes);
+app.use("/api", userRoutes);
 
 // Rotas protegidas
-app.use("/api", authenticateToken, userRoutes);
+app.use("/api", authenticateToken, workspaceRoutes);
+app.use("/api", authenticateToken, todosRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
 
 // Encerramento correto do Prisma
