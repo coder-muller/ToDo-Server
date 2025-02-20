@@ -1,8 +1,9 @@
 version: '3.8'
 services:
+
   db:
     image: postgres:15-alpine
-    container_name: my-databse
+    container_name: my-database
     restart: always
     environment:
       POSTGRES_USER: root
@@ -23,6 +24,22 @@ services:
       DATABASE_URL: "postgresql://root:siscgmsis2025@db:5432/todo-db"
       PORT: "3000"
       JWT_SECRET: "01951a38631b776ea5d19c06751ef9c4"
+
+    labels:
+      - traefik.enable=true
+
+      - traefik.http.routers.project1-http.rule=Host('todo-api.cgmcloud.com.br')
+      - traefik.http.routers.project1-http.entrypoints=http
+      - traefik.http.routers.project1-http.middlewares=https-redirect
+
+      - traefik.http.routers.project1-https.rule=Host('todo-api.cgmcloud.com.br')
+      - traefik.http.routers.project1-https.entrypoints=https
+      - traefik.http.routers.project1-https.tls=true
+      - traefik.http.routers.project1-https.tls.certresolver=le
+      - traefik.http.routers.project1-https.service=project1-service
+      - traefik.http.services.project1-service.loadbalancer.server.port=3000
+    networks:
+      - traefik-public
     ports:
       - "3000:3000"
     volumes:
@@ -32,3 +49,7 @@ services:
 
 volumes:
   pg_data:
+
+networks:
+  traefik-public:
+    external: true
