@@ -28,11 +28,11 @@ services:
     labels:
       - traefik.enable=true
 
-      - traefik.http.routers.project1-http.rule=Host('todo-api.cgmcloud.com.br')
+      - traefik.http.routers.project1-http.rule=Host(`todo-api.cgmcloud.com.br`)
       - traefik.http.routers.project1-http.entrypoints=http
       - traefik.http.routers.project1-http.middlewares=https-redirect
 
-      - traefik.http.routers.project1-https.rule=Host('todo-api.cgmcloud.com.br')
+      - traefik.http.routers.project1-https.rule=Host(`todo-api.cgmcloud.com.br`)
       - traefik.http.routers.project1-https.entrypoints=https
       - traefik.http.routers.project1-https.tls=true
       - traefik.http.routers.project1-https.tls.certresolver=le
